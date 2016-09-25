@@ -22,6 +22,7 @@ transforms it to LLVM IR. This command will also install LLVM itself.
 
 ### Compiling LLVM
 Compiling LLVM is mandatory if you are building a pass in source (within LLVM source tree). It can also be convenient to give you full control over LLVM compilation options.
+
 1.  Download LLVM [source](http://llvm.org/releases/)
 and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
 
@@ -65,7 +66,7 @@ $ LLVM_DIR="$LLVM_HOME/share/llvm/cmake" cmake ..
 $ make
 $ cd ..
 ```
-cmake needs to find its LLVM configurations which which we provided in
+cmake needs to find its LLVM configurations which we provid in
 `$LLVM_DIR`. Alternatively, you can use the one available in system-wide
 at `/usr/share/llvm-3.8/cmake/`
 
@@ -78,4 +79,4 @@ This tutorial is based on the following resources
 
 - Adrian Sampson's blog entry "LLVM for Grad Students" ([link](http://adriansampson.net/blog/llvm.html))
 - LLVM documentation: Writing an LLVM pass ([link](http://llvm.org/docs/WritingAnLLVMPass.html))
-- LLVM documentation: Buildin LLVM with CMake ([link](http://llvm.org/docs/CMake.html#cmake-out-of-source-pass))
+- LLVM documentation: Building LLVM with CMake ([link](http://llvm.org/docs/CMake.html#cmake-out-of-source-pass))
