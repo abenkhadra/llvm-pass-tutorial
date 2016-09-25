@@ -1,7 +1,6 @@
 
 ## At a glance
-A step-by-step tutorial for building an LLVM pass based on Adrian Sampson's "LLVM
-for Grad Students"
+A step-by-step tutorial for building an out-of-source LLVM pass based on Adrian Sampson's "LLVM for Grad Students"
 
 ## Setup
 
@@ -21,21 +20,23 @@ transforms it to LLVM IR. This command will also install LLVM itself.
 
 
 ### Compiling LLVM
-Compiling LLVM is mandatory if you are building a pass in source (within LLVM source tree). It can also be convenient to give you full control over LLVM compilation options.
+Compiling LLVM is mandatory if you are building an in-source pass (within LLVM source tree). It can also be convenient to give you full control over LLVM compilation options.
 
 1.  Download LLVM [source](http://llvm.org/releases/)
 and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
 
 2. Create a separate build directory
     ```bash
-    $ mkdir mybuilddir
-  $ cd mybuilddir
+    $ mkdir llvm-build
+    $ cd llvm-build
     ```
 3. Instruct CMake to detect and configure your build environment:
+
     ```bash
     $ cmake $LLVM_SRC
     ```
 4. Now start the actual compilation within your build directory
+
     ```bash
     $ cmake --build .
     ```
