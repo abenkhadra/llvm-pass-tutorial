@@ -1,26 +1,21 @@
 
-## At a glance
+## At a glance ##
 A step-by-step tutorial for building an out-of-source LLVM pass based on Adrian Sampson's "LLVM for Grad Students"
 
-## Setup
+## Setup ##
 
 LLVM is an umbrella project for building compilers
 and code transformation tools. We consider in this tutorial:
 - Building LLVM from source
 - Building a trivial out-of-source LLVM pass.
 
-We will be using LLVM version `3.8`. We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4.3). Additionally, we assume that you have the corresponding `Clang` already installed. You can easily obtain `Clang` using:
-
-```bash
-$ sudo apt-get install clang-3.8
-```
-Clang is the compiler front-end, the tool that takes C/C++ code as input and
-transforms it to LLVM IR. This command will also install LLVM itself.
+We will be installing LLVM v`3.9.1` which is the latest as of this writing.
+We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4.3).
 
 
-
-### Compiling LLVM
-Compiling LLVM is mandatory if you are building an in-source pass (within LLVM source tree). It can also be convenient to give you full control over LLVM compilation options.
+## Compiling LLVM ##
+Compiling LLVM from source is mandatory if you are developing an in-source pass (within LLVM source tree).
+It can also be convenient even in the case of developing out-of-source passes as it gives you full control over the compilation options.
 
 1.  Download LLVM [source](http://llvm.org/releases/)
 and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
@@ -40,41 +35,42 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
     ```bash
     $ cmake --build .
     ```
-    The --build option is a portable why to tell cmake to invoke the underlying
+    The `--build` option is a portable why to tell cmake to invoke the underlying
     build tool (make, ninja, xcodebuild, msbuild, etc.)
 
-5. Building will take a while, after that you can install LLVM in its default directory
+5. Building require a while. After that you can install LLVM in its default directory
     which is `/usr/local`
     ```bash
     $ cmake --build . --target install
     ```
-    It's possible to set a different install directory ($LLVM_HOME) at installation
-    time using
+    Alternatively, it's possible to set a different install directory (`$LLVM_HOME`)
     ```bash
     $ cmake -DCMAKE_INSTALL_PREFIX=$LLVM_HOME -P cmake_install.cmake
     ```
-    Note that $LLVM_HOME must `not` contain `~`(tilde) to refer to your home directory as
-    it won't be expanded. Use an absolute path instead.
+    Note that `$LLVM_HOME` must __not__ contain `~` (tilde) to refer to your home directory as it won't be expanded. Use absolute paths instead.
 
-### Building a trivial LLVM pass
+## Building a trivial LLVM pass ##
 
-Build the pass found in `skeleton` folder:
+To build the pass found in `skeleton` folder:
 ```bash
 $ cd llvm-pass-tutorial
 $ mkdir build
 $ cd build
 $ LLVM_DIR="$LLVM_HOME/share/llvm/cmake" cmake ..
 $ make
-$ cd ..
 ```
-cmake needs to find its LLVM configurations which we provid in
-`$LLVM_DIR`. Alternatively, you can use the one available in system-wide
-at `/usr/share/llvm-3.8/cmake/`
+cmake needs to find its LLVM configurations which we provide using
+`$LLVM_DIR`. Alternatively, you can use system-wide cmake configurations
+at `/usr/share/llvm-3.8/cmake/` if available.
 
-Run the skeleton pass:
+
+The easiest way to run the skeleton pass is using Clang which is the compiler
+front-end of the LLVM framework:
 ```bash
-$ clang-3.8 -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
+$ clang-3.9 -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
 ```
+Note that Clang needs to be installed separately.
+
 ### Further resources
 This tutorial is based on the following resources
 
