@@ -9,7 +9,7 @@ and code transformation tools. We consider in this tutorial:
 - Building LLVM from source
 - Building a trivial out-of-source LLVM pass.
 
-We will be installing LLVM v`3.9.1` which is the latest as of this writing.
+We will be building LLVM v`3.9.1` which is the latest as of this writing.
 We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4.3).
 
 
@@ -28,8 +28,12 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
 3. Instruct CMake to detect and configure your build environment:
 
     ```bash
-    $ cmake $LLVM_SRC
+    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 $LLVM_SRC
     ```
+    Note that we instructed cmake to only build `X86` backend.
+    You can choose different backends if needed. Without specifying `LLVM_TARGETS_TO_BUILD`
+    all supported backends will be built by default which requires more time.
+
 4. Now start the actual compilation within your build directory
 
     ```bash
@@ -38,8 +42,7 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
     The `--build` option is a portable why to tell cmake to invoke the underlying
     build tool (make, ninja, xcodebuild, msbuild, etc.)
 
-5. Building require a while. After that you can install LLVM in its default directory
-    which is `/usr/local`
+5. Building takes some time to finish. After that you can install LLVM in its default directory which is `/usr/local`
     ```bash
     $ cmake --build . --target install
     ```
@@ -51,7 +54,7 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
 
 ## Building a trivial LLVM pass ##
 
-To build the pass found in `skeleton` folder:
+To build skeleton LLVM pass found in `skeleton` folder:
 ```bash
 $ cd llvm-pass-tutorial
 $ mkdir build
@@ -60,12 +63,8 @@ $ LLVM_DIR="$LLVM_HOME/share/llvm/cmake" cmake ..
 $ make
 ```
 cmake needs to find its LLVM configurations which we provide using
-`$LLVM_DIR`. Alternatively, you can use system-wide cmake configurations
-at `/usr/share/llvm-3.8/cmake/` if available.
-
-
-The easiest way to run the skeleton pass is using Clang which is the compiler
-front-end of the LLVM framework:
+`$LLVM_DIR`. Now the easiest way to run the skeleton pass is using Clang which
+is the compiler front-end of the LLVM framework:
 ```bash
 $ clang-3.9 -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
 ```
