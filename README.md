@@ -32,7 +32,7 @@ and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]`
     $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]
     ```
     Note that we instructed cmake to only build `X86` backend.
-    You can choose different a backend if needed. If you do not specify `LLVM_TARGETS_TO_BUILD`,
+    You can choose a different backend if needed. If you do not specify `LLVM_TARGETS_TO_BUILD`,
     then all supported backends will be built by default which requires more time.
 
 4. Now start the actual compilation within your build directory
