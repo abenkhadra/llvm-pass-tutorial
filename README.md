@@ -10,15 +10,16 @@ and code transformation tools. We consider in this tutorial:
 - Building a trivial out-of-source LLVM pass.
 
 We will be building LLVM v`7.0.0` which is the latest as of this writing.
-We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4.3).
+We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4).
 
 
 ## Compiling LLVM ##
 Compiling LLVM from source is mandatory if you are developing an in-source pass (within LLVM source tree).
-It can also be convenient even in the case of developing out-of-source passes as it gives you full control over the compilation options.
+It can also be convenient in the case of developing out-of-source passes as it gives you full control over the compilation options.
+For example, a debug build of LLVM is much more pleasant to work with compared to an optimized one. To compile LLVM, please follow the following steps:
 
 1.  Download LLVM [source](http://llvm.org/releases/)
-and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
+and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]`
 
 2. Create a separate build directory
     ```bash
@@ -28,11 +29,11 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
 3. Instruct CMake to detect and configure your build environment:
 
     ```bash
-    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 $LLVM_SRC
+    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]
     ```
     Note that we instructed cmake to only build `X86` backend.
-    You can choose different backends if needed. Without specifying `LLVM_TARGETS_TO_BUILD`
-    all supported backends will be built by default which requires more time.
+    You can choose different a backend if needed. If you do not specify `LLVM_TARGETS_TO_BUILD`,
+    then all supported backends will be built by default which requires more time.
 
 4. Now start the actual compilation within your build directory
 
@@ -46,7 +47,9 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
     ```bash
     $ cmake --build . --target install
     ```
-    Alternatively, it's possible to set a different install directory (`$LLVM_HOME`)
+    Alternatively, it's possible to set a different install directory `[LLVM_HOME]`.
+    Since we will need `[LLVM_HOME]` in the next stage, we assume that you have defined
+    it as an environment variable `$LLVM_HOME`. Now you can issue the following command
     ```bash
     $ cmake -DCMAKE_INSTALL_PREFIX=$LLVM_HOME -P cmake_install.cmake
     ```
@@ -54,7 +57,7 @@ and unpack it in a directory of your choice which will refer to as `$LLVM_SRC`
 
 ## Building a trivial LLVM pass ##
 
-To build skeleton LLVM pass found in `skeleton` folder:
+To build the skeleton LLVM pass found in `skeleton` folder:
 ```bash
 $ cd llvm-pass-tutorial
 $ mkdir build
@@ -62,13 +65,13 @@ $ cd build
 $ cmake ..
 $ make
 ```
-cmake needs to find its LLVM configurations which we provide using
-`$LLVM_DIR`. Now the easiest way to run the skeleton pass is using Clang which
-is the compiler front-end of the LLVM framework:
+`cmake` needs to find its LLVM configurations in `[LLVM_DIR]`. We automatically
+setup `[LLVM_DIR]` based on `$LLVM_HOME` for you. Now the easiest way to run the skeleton pass is to use Clang:
 ```bash
-$ $LLVM_HOME/bin/clang -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
+$ clang-7.0 -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
 ```
-Note that Clang needs to be installed separately.
+Note that Clang is the compiler front-end of the LLVM project.
+It can be installed separately in binary form.
 
 ### Further resources
 This tutorial is based on the following resources
