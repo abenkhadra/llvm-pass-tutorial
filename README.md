@@ -9,7 +9,7 @@ and code transformation tools. We consider in this tutorial:
 - Building LLVM from source
 - Building a trivial out-of-source LLVM pass.
 
-We will be building LLVM v`7.0.0` which is the latest as of this writing.
+We will be building LLVM v`10.0.0` which is the latest as of this writing.
 We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4).
 
 
