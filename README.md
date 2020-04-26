@@ -5,8 +5,9 @@ A step-by-step tutorial for building an out-of-source LLVM pass based on Adrian 
 ## Setup ##
 
 LLVM is an umbrella project for building compilers
-and code transformation tools. We consider in this tutorial:
-- Building LLVM from source
+and code transformation tools. It consists of several sub-projects like Clang, LLD and,
+confusingly enough, the LLVM sub-project. We consider in this tutorial:
+- Building the LLVM *sub-project* from source
 - Building a trivial out-of-source LLVM pass.
 
 We will be building LLVM v`10.0.0` which is the latest as of this writing.
@@ -29,7 +30,7 @@ and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]`
 3. Instruct CMake to detect and configure your build environment:
 
     ```bash
-    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]
+    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]/llvm
     ```
     Note that we instructed cmake to only build `X86` backend.
     You can choose a different backend if needed. If you do not specify `LLVM_TARGETS_TO_BUILD`,
@@ -53,7 +54,8 @@ and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]`
     ```bash
     $ cmake -DCMAKE_INSTALL_PREFIX=$LLVM_HOME -P cmake_install.cmake
     ```
-    Note that `$LLVM_HOME` must __not__ contain `~` (tilde) to refer to your home directory as it won't be expanded. Use absolute paths instead.
+    Note that `$LLVM_HOME` must __not__ contain `~` (tilde) to refer to your home directory
+    as it won't be expanded. Use `$HOME` or an absolute path instead.
 
 ## Building a trivial LLVM pass ##
 
