@@ -1,12 +1,13 @@
 
 ## At a glance ##
-A step-by-step tutorial for building an out-of-source LLVM pass based on Adrian Sampson's "LLVM for Grad Students"
+A step-by-step tutorial for building an out-of-source LLVM pass based on
+Adrian Sampson's "LLVM for Grad Students"
 
 ## Setup ##
 
 LLVM is an umbrella project for building compilers
-and code transformation tools. It consists of several sub-projects like Clang, LLD and,
-confusingly enough, the LLVM sub-project. We consider in this tutorial:
+and code transformation tools. It consists of several sub-projects like Clang,
+LLD and, confusingly enough, the LLVM sub-project. We consider in this tutorial:
 - Building the LLVM *sub-project* from source
 - Building a trivial out-of-source LLVM pass.
 
@@ -30,7 +31,7 @@ and unpack it in a directory of your choice which will refer to as `[LLVM_SRC]`
 3. Instruct CMake to detect and configure your build environment:
 
     ```bash
-    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]/llvm
+    $ cmake -DCMAKE_BUILD_TYPE=Debug -DLLVM_TARGETS_TO_BUILD=X86 [LLVM_SRC]
     ```
     Note that we instructed cmake to only build `X86` backend.
     You can choose a different backend if needed. If you do not specify `LLVM_TARGETS_TO_BUILD`,
